@@ -1,44 +1,66 @@
 <template>
-    <nav class="panel column is-offset-2 is-8">
-        <div class="panel-heading is-size-4">
-            <p class="is-inline-block">
-                Vuejs Phonebook
-            </p>
-            <button class="button is-primary is-pulled-right">
-                reset all filters
-            </button>
-        </div>
-        <div class="panel-block">
-            <p class="control has-icons-left">
-                <input class="input is-small" type="text" placeholder="search">
-                <span class="icon is-small is-left">
-                    <i class="fa fa-search" aria-hidden="true"></i>
+    <div>
+        <nav class="panel column is-offset-2 is-8">
+            <div class="panel-heading is-size-4">
+                <p class="is-inline-block">
+                    Vuejs Phonebook
+                </p>
+                <button class="button is-primary is-pulled-right" @click="openModal" >
+                    Agregar Contacto
+                </button>
+            </div>
+            <div class="panel-block">
+                <p class="control has-icons-left">
+                    <input class="input is-small" type="text" placeholder="search">
+                    <span class="icon is-small is-left">
+                        <i class="fa fa-search" aria-hidden="true"></i>
+                    </span>
+                </p>
+            </div>
+            <a class="panel-block">
+                <span class="column is-9">bulma</span>
+                <span class="panel-icon column is-1">
+                    <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
                 </span>
-            </p>
-        </div>
-        <a class="panel-block">
-            <span class="column is-9">bulma</span>
-            <span class="panel-icon column is-1">
-                <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
-            </span>
 
-            <span class="panel-icon column is-1">
-                <i class="has-text-info fa fa-edit" aria-hidden="true"></i>
-            </span>
+                <span class="panel-icon column is-1">
+                    <i class="has-text-info fa fa-edit" aria-hidden="true"></i>
+                </span>
 
-            <span class="panel-icon column is-1">
-                <i class="has-text-primary fa fa-eye" aria-hidden="true"></i>
-            </span>
-        </a>
+                <span class="panel-icon column is-1">
+                    <i class="has-text-primary fa fa-eye" aria-hidden="true"></i>
+                </span>
+            </a>
 
-        <div class="panel-block">
+            <div class="panel-block">
 
-        </div>
-    </nav>
+            </div>
+        </nav>
+        <!-- para pasar parametros entre padre a hijo se usan prop -->
+        <add-phone :openmodal='addActive' @closeRequest="close"></add-phone>
+    </div>
 </template>
 <script>
-    export default {
+    // const Add = require('./addComponent.vue');
+    const AddPhone = Vue.component('add-phone', require('./addComponent.vue').default);
 
+    export default {
+            // components:{
+            //     'AddTemp': Add,
+            // }
+            data() {
+                return {
+                    addActive : ''
+                }
+            },
+            methods: {
+                openModal(){
+                    this.addActive = 'is-active';
+                },
+                close(){
+                    this.addActive = '';
+                }  
+            },
     }
 
 </script>

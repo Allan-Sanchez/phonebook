@@ -14,6 +14,7 @@
         <my-header> </my-header>
         <div class="container">
             <router-view></router-view>
+            {{-- <add-phone></add-phone> --}}
         </div>
         <my-footer></my-footer>
     </div>
