@@ -6,8 +6,8 @@
             </a>
         </div>
         <div class="navbar-menu is-active">
-            <a class="navbar-item" href="#">Inicio</a>
-            <a class="navbar-item" href="#">Acerca de</a>
+            <router-link to="/home" class="navbar-item">Inicio</router-link>
+            <router-link to="/about" class="navbar-item">Acerca de</router-link>
 
         </div>
     </nav>
