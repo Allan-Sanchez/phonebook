@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Phonebook;
 use Illuminate\Http\Request;
+use App\Http\Requests\RequestPhonebook;
 
 class PhonebookController extends Controller
 {
@@ -15,6 +16,7 @@ class PhonebookController extends Controller
     public function index()
     {
         //
+        return view('phonebook');
     }
 
     /**
@@ -33,9 +35,14 @@ class PhonebookController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RequestPhonebook $request)
     {
-        //
+
+        $newPhone = new Phonebook;
+        $newPhone->name = $request->name;
+        $newPhone->phone = $request->phone;
+        $newPhone->email = $request->email;
+        $newPhone->save();        
     }
 
     /**
