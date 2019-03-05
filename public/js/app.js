@@ -1990,6 +1990,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 // const Add = require('./addComponent.vue');
 var AddPhone = Vue.component('add-phone', __webpack_require__(/*! ./addComponent.vue */ "./resources/js/components/addComponent.vue").default);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1998,8 +1999,19 @@ var AddPhone = Vue.component('add-phone', __webpack_require__(/*! ./addComponent
   // }
   data: function data() {
     return {
-      addActive: ''
+      addActive: '',
+      errors: {},
+      listPhone: {}
     };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.post('/getData').then(function (response) {
+      return _this.listPhone = response.data;
+    }).catch(function (error) {
+      return _this.errors = error.response.data.errors;
+    });
   },
   methods: {
     openModal: function openModal() {
@@ -30385,28 +30397,45 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("nav", { staticClass: "panel column is-offset-2 is-8" }, [
-        _c("div", { staticClass: "panel-heading is-size-4" }, [
-          _c("p", { staticClass: "is-inline-block" }, [
-            _vm._v("\n                Vuejs Phonebook\n            ")
+      _c(
+        "nav",
+        { staticClass: "panel column is-offset-2 is-8" },
+        [
+          _c("div", { staticClass: "panel-heading is-size-4" }, [
+            _c("p", { staticClass: "is-inline-block" }, [
+              _vm._v("\n                Vuejs Phonebook\n            ")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button is-primary is-pulled-right",
+                on: { click: _vm.openModal }
+              },
+              [_vm._v("\n                Agregar Contacto\n            ")]
+            )
           ]),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary is-pulled-right",
-              on: { click: _vm.openModal }
-            },
-            [_vm._v("\n                Agregar Contacto\n            ")]
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "panel-block" })
-      ]),
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._l(_vm.listPhone, function(item, key) {
+            return _c("a", { key: key, staticClass: "panel-block" }, [
+              _c("span", { staticClass: "column is-9" }, [
+                _vm._v(_vm._s(item.name))
+              ]),
+              _vm._v(" "),
+              _vm._m(1, true),
+              _vm._v(" "),
+              _vm._m(2, true),
+              _vm._v(" "),
+              _vm._m(3, true)
+            ])
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-block" })
+        ],
+        2
+      ),
       _vm._v(" "),
       _c("add-phone", {
         attrs: { openmodal: _vm.addActive },
@@ -30441,29 +30470,33 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "panel-block" }, [
-      _c("span", { staticClass: "column is-9" }, [_vm._v("bulma")]),
-      _vm._v(" "),
-      _c("span", { staticClass: "panel-icon column is-1" }, [
-        _c("i", {
-          staticClass: "has-text-danger fa fa-trash",
-          attrs: { "aria-hidden": "true" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "panel-icon column is-1" }, [
-        _c("i", {
-          staticClass: "has-text-info fa fa-edit",
-          attrs: { "aria-hidden": "true" }
-        })
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "panel-icon column is-1" }, [
-        _c("i", {
-          staticClass: "has-text-primary fa fa-eye",
-          attrs: { "aria-hidden": "true" }
-        })
-      ])
+    return _c("span", { staticClass: "panel-icon column is-1" }, [
+      _c("i", {
+        staticClass: "has-text-danger fa fa-trash",
+        attrs: { "aria-hidden": "true" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "panel-icon column is-1" }, [
+      _c("i", {
+        staticClass: "has-text-info fa fa-edit",
+        attrs: { "aria-hidden": "true" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "panel-icon column is-1" }, [
+      _c("i", {
+        staticClass: "has-text-primary fa fa-eye",
+        attrs: { "aria-hidden": "true" }
+      })
     ])
   }
 ]
@@ -45454,15 +45487,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!**************************************************!*\
   !*** ./resources/js/components/addComponent.vue ***!
   \**************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _addComponent_vue_vue_type_template_id_020be9b2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./addComponent.vue?vue&type=template&id=020be9b2& */ "./resources/js/components/addComponent.vue?vue&type=template&id=020be9b2&");
 /* harmony import */ var _addComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./addComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/addComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _addComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _addComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -45492,7 +45524,7 @@ component.options.__file = "resources/js/components/addComponent.vue"
 /*!***************************************************************************!*\
   !*** ./resources/js/components/addComponent.vue?vue&type=script&lang=js& ***!
   \***************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

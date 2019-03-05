@@ -17,8 +17,9 @@
                     </span>
                 </p>
             </div>
-            <a class="panel-block">
-                <span class="column is-9">bulma</span>
+            <a class="panel-block" v-for="(item, key) in listPhone" :key="key">
+
+                <span class="column is-9">{{item.name}}</span>
                 <span class="panel-icon column is-1">
                     <i class="has-text-danger fa fa-trash" aria-hidden="true"></i>
                 </span>
@@ -50,8 +51,14 @@
             // }
             data() {
                 return {
-                    addActive : ''
+                    addActive : '',
+                    errors:{},
+                    listPhone:{},
                 }
+            },
+            mounted() {
+                 axios.post('/getData').then((response) => this.listPhone = response.data)
+                    .catch((error) => this.errors = error.response.data.errors);
             },
             methods: {
                 openModal(){
