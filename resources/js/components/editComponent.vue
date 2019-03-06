@@ -3,7 +3,7 @@
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
-                <p class="modal-card-title">Agregar un nuevo contacto</p>
+                <p class="modal-card-title">Actualizar un contacto</p>
                 <button class="delete" aria-label="close" @click="closeModal"></button>
             </header>
             <section class="modal-card-body">
@@ -33,6 +33,7 @@
                     <small v-if="errors.phone" class="has-text-danger">{{errors.phone[0]}}</small>
                 </div>
 
+
                 <!-- campo email -->
                 <div class="field">
                     <label class="label">Correo electronico</label>
@@ -47,7 +48,7 @@
                 </div>
             </section>
             <footer class="modal-card-foot">
-                <button class="button is-success" @click="savePhone">Agregar</button>
+                <button class="button is-success" @click="updatePhone">Actualizar</button>
                 <button class="button is-danger" @click="closeModal">Cancelar</button>
             </footer>
         </div>
@@ -56,18 +57,12 @@
 
 <script>
     export default {
-        // const AddPhone = Vue.component('add-phone', require('./components/addComponent.vue').default);
         props: ['openmodal'],
         data() {
             return {
-                list: {
-                    name: '',
-                    phone: '',
-                    email: '',
-                },
-                errors: {
-
-                }
+                list: {},
+                keychild:'',
+                errors: {}
             }
         },
         methods: {
@@ -80,13 +75,15 @@
                 this.$data.list.email = '';
                 this.closeModal();
             },
-            savePhone() {
+            updatePhone() {
+                // console.log(this.$parent.listPhone.splice(this.$data.keychild,1,response.data));
+                
 
-                axios.post('/phonebook', this.$data.list)
-                .then((response) =>{
-                    this.$parent.listPhone.push(response.data)
-                    this.clearModal()})
-                .catch((error) => this.errors = error.response.data.errors);
+                axios.patch(`/phonebook/${this.list.id}`, this.$data.list)
+                    .then((response) => {
+                        this.$parent.listPhone.splice(this.$data.keychild,1,response.data)
+                        this.clearModal()})
+                    .catch((error) => this.errors = error.response.data.errors);
 
             }
         },
