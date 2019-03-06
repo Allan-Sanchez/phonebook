@@ -1778,6 +1778,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({// mounted() {
   //     console.log('Component mounted.')
   // }
@@ -30036,24 +30052,28 @@ var render = function() {
     [
       _vm._m(0),
       _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "navbar-menu is-active" },
-        [
-          _c(
-            "router-link",
-            { staticClass: "navbar-item", attrs: { to: "/home" } },
-            [_vm._v("Inicio")]
-          ),
-          _vm._v(" "),
-          _c(
-            "router-link",
-            { staticClass: "navbar-item", attrs: { to: "/about" } },
-            [_vm._v("Acerca de")]
-          )
-        ],
-        1
-      )
+      _c("div", { staticClass: "navbar-menu is-active" }, [
+        _c(
+          "div",
+          { staticClass: "navbar-start" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "navbar-item", attrs: { to: "/home" } },
+              [_vm._v("Inicio")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "navbar-item", attrs: { to: "/about" } },
+              [_vm._v("Acerca de")]
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(1)
     ]
   )
 }
@@ -30072,6 +30092,35 @@ var staticRenderFns = [
             height: "28"
           }
         })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "navbar-end" }, [
+      _c("div", { staticClass: "navbar-item" }, [
+        _c("div", { staticClass: "buttons" }, [
+          _c("a", { staticClass: "button is-primary" }, [
+            _c("span", { staticClass: "icon" }, [
+              _c("i", { staticClass: "fa fa-github fa-7x" })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("My Github")])
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "button is-primary" }, [
+            _c("span", { staticClass: "icon" }, [
+              _c("i", {
+                staticClass: "fa fa-facebook-official",
+                attrs: { "aria-hidden": "true" }
+              })
+            ]),
+            _vm._v(" "),
+            _c("span", [_vm._v("My Facebook")])
+          ])
+        ])
       ])
     ])
   }

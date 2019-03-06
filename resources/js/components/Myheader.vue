@@ -6,10 +6,26 @@
             </a>
         </div>
         <div class="navbar-menu is-active">
-            <router-link to="/home" class="navbar-item">Inicio</router-link>
-            <router-link to="/about" class="navbar-item">Acerca de</router-link>
-
+            <div class="navbar-start">
+                <router-link to="/home" class="navbar-item">Inicio</router-link>
+                <router-link to="/about" class="navbar-item">Acerca de</router-link>
+            </div>
         </div>
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <a class="button is-primary">
+                        <span class="icon"><i class="fa fa-github fa-7x"></i></span>
+                        <span>My Github</span>
+                    </a>
+                    <a class="button is-primary">
+                        <span class="icon"><i class="fa fa-facebook-official" aria-hidden="true"></i></span>
+                        <span>My Facebook</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
     </nav>
 </template>
 
