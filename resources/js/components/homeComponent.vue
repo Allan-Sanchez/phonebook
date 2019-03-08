@@ -48,9 +48,9 @@
 </template>
 <script>
     // const Add = require('./addComponent.vue');
-    const AddPhone = Vue.component('add-phone', require('./addComponent.vue').default);
-    const ShowPhone = Vue.component('show-phone', require('./showComponent.vue').default);
-    const updatePhone = Vue.component('update-phone', require('./editComponent.vue').default);
+    const AddPhone = Vue.component('add-phone', require('./CRUD/addComponent.vue').default);
+    const ShowPhone = Vue.component('show-phone', require('./CRUD/showComponent.vue').default);
+    const updatePhone = Vue.component('update-phone', require('./CRUD/editComponent.vue').default);
 
     export default {
             // components:{
