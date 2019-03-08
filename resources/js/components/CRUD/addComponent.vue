@@ -83,10 +83,20 @@
             savePhone() {
 
                 axios.post('/phonebook', this.$data.list)
-                .then((response) =>{
-                    this.$parent.listPhone.push(response.data)
-                    this.clearModal()})
-                .catch((error) => this.errors = error.response.data.errors);
+                    .then((response) => {
+                        this.$parent.listPhone.push(response.data)
+                        this.$parent.listPhone.sort(function (a, b) {
+                            if (a.name > b.name) {
+                                return 1;
+                            }
+                            else if (a.name < b.name) {
+                                return -1;
+                            }
+
+                        })
+                        this.clearModal()
+                    })
+                    .catch((error) => this.errors = error.response.data.errors);
 
             }
         },

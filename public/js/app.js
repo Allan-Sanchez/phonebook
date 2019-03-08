@@ -1848,6 +1848,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/phonebook', this.$data.list).then(function (response) {
         _this.$parent.listPhone.push(response.data);
 
+        _this.$parent.listPhone.sort(function (a, b) {
+          if (a.name > b.name) {
+            return 1;
+          } else if (a.name < b.name) {
+            return -1;
+          }
+        });
+
         _this.clearModal();
       }).catch(function (error) {
         return _this.errors = error.response.data.errors;
@@ -2399,16 +2407,35 @@ var updatePhone = Vue.component('update-phone', __webpack_require__(/*! ./CRUD/e
       updateActive: '',
       animate: false,
       errors: {},
-      listPhone: {}
+      listPhone: {},
+      searchQuerry: '',
+      temp: ''
     };
   },
+  watch: {
+    searchQuerry: function searchQuerry() {
+      var _this = this;
+
+      if (this.searchQuerry.length > 0) {
+        this.temp = this.listPhone.filter(function (item) {
+          return Object.keys(item).some(function (key) {
+            var search = String(item[key]); // console.log(search);
+
+            return search.toLowerCase().indexOf(_this.searchQuerry.toLowerCase()) > -1;
+          });
+        });
+      } else {
+        this.temp = this.listPhone;
+      }
+    }
+  },
   mounted: function mounted() {
-    var _this = this;
+    var _this2 = this;
 
     axios.post('/getData').then(function (response) {
-      return _this.listPhone = response.data;
+      return _this2.temp = _this2.listPhone = response.data;
     }).catch(function (error) {
-      return _this.errors = error.response.data.errors;
+      return _this2.errors = error.response.data.errors;
     });
   },
   methods: {
@@ -2420,38 +2447,44 @@ var updatePhone = Vue.component('update-phone', __webpack_require__(/*! ./CRUD/e
       this.showActive = '';
       this.updateActive = '';
     },
-    closeUpdate: function closeUpdate() {
-      var _this2 = this;
+    refresh: function refresh() {
+      var _this3 = this;
 
       axios.post('/getData').then(function (response) {
-        return _this2.listPhone = response.data;
+        return _this3.listPhone = _this3.temp = response.data;
       }).catch(function (error) {
-        return _this2.errors = error.response.data.errors;
+        return _this3.errors = error.response.data.errors;
       });
+      this.searchQuerry = '';
+    },
+    closeUpdate: function closeUpdate() {
+      this.refresh();
       this.addActive = '';
       this.showActive = '';
-      this.updateActive = '';
+      this.updateActive = ''; // this.searchQuerry ='';
     },
     openShow: function openShow(key) {
       this.showActive = 'is-active';
-      this.$children[1].listShow = this.listPhone[key];
+      this.$children[1].listShow = this.temp[key];
     },
     openUpdate: function openUpdate(key) {
       this.updateActive = 'is-active';
-      this.$children[2].list = this.listPhone[key];
+      this.$children[2].list = this.temp[key];
       this.$children[2].keychild = key; // this.listPhone.splice(key,1);
     },
     openDelete: function openDelete(key, id) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (confirm("Estas seguro de eliminar al contacto")) {
         this.animate = !this.animate;
         axios.delete("/phonebook/".concat(id)).then(function (response) {
-          _this3.listPhone.splice(key, 1);
+          _this4.temp.splice(key, 1);
 
-          _this3.animate = !_this3.animate;
+          _this4.animate = !_this4.animate;
+
+          _this4.refresh();
         }).catch(function (error) {
-          return _this3.errors = error.response.data.errors;
+          return _this4.errors = error.response.data.errors;
         });
       }
     }
@@ -31480,9 +31513,35 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(0),
+          _c("div", { staticClass: "panel-block" }, [
+            _c("p", { staticClass: "control has-icons-left" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.searchQuerry,
+                    expression: "searchQuerry"
+                  }
+                ],
+                staticClass: "input is-small",
+                attrs: { type: "text", placeholder: "search" },
+                domProps: { value: _vm.searchQuerry },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.searchQuerry = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ])
+          ]),
           _vm._v(" "),
-          _vm._l(_vm.listPhone, function(item, key) {
+          _vm._l(_vm.temp, function(item, key) {
             return _c("a", { key: key, staticClass: "panel-block" }, [
               _c("span", { staticClass: "column is-9" }, [
                 _vm._v(_vm._s(item.name))
@@ -31554,20 +31613,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-block" }, [
-      _c("p", { staticClass: "control has-icons-left" }, [
-        _c("input", {
-          staticClass: "input is-small",
-          attrs: { type: "text", placeholder: "search" }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "icon is-small is-left" }, [
-          _c("i", {
-            staticClass: "fa fa-search",
-            attrs: { "aria-hidden": "true" }
-          })
-        ])
-      ])
+    return _c("span", { staticClass: "icon is-small is-left" }, [
+      _c("i", { staticClass: "fa fa-search", attrs: { "aria-hidden": "true" } })
     ])
   }
 ]

@@ -14,13 +14,13 @@
             </div>
             <div class="panel-block">
                 <p class="control has-icons-left">
-                    <input class="input is-small" type="text" placeholder="search">
+                    <input class="input is-small" type="text" placeholder="search" v-model="searchQuerry">
                     <span class="icon is-small is-left">
                         <i class="fa fa-search" aria-hidden="true"></i>
                     </span>
                 </p>
             </div>
-            <a class="panel-block" v-for="(item, key) in listPhone" :key="key">
+            <a class="panel-block" v-for="(item, key) in temp" :key="key">
 
                 <span class="column is-9">{{item.name}}</span>
                 <span class="panel-icon column is-1">
@@ -64,10 +64,34 @@
                     animate:false,
                     errors:{},
                     listPhone:{},
+                    searchQuerry:'',
+                    temp: '',
+                }
+            },
+            watch: {
+                searchQuerry(){
+                    if (this.searchQuerry.length > 0) {
+                     this.temp = this.listPhone.filter((item) => {
+
+                        return Object.keys(item).some((key)=>{
+                             var search = String(item[key])
+                            
+                            // console.log(search);
+                            return search.toLowerCase()
+                            .indexOf(this.searchQuerry.toLowerCase())>-1
+
+                         })
+
+                         
+                        })
+                        
+                    }else{
+                        this.temp = this.listPhone;
+                    }
                 }
             },
             mounted() {
-                 axios.post('/getData').then((response) => this.listPhone = response.data)
+                 axios.post('/getData').then((response) => this.temp = this.listPhone = response.data)
                     .catch((error) => this.errors = error.response.data.errors);
             },
             methods: {
@@ -79,21 +103,26 @@
                     this.showActive = '';
                     this.updateActive = '';
                 },
-                closeUpdate(){
-                    axios.post('/getData').then((response) => this.listPhone = response.data)
+                refresh(){
+                    axios.post('/getData').then((response) => this.listPhone =this.temp =  response.data)
                     .catch((error) => this.errors = error.response.data.errors);
+                    this.searchQuerry = ''
+                },
+                closeUpdate(){
                     
+                    this.refresh();
                     this.addActive = '';
                     this.showActive = '';
                     this.updateActive = '';
+                    // this.searchQuerry ='';
                 },
                 openShow(key){
                     this.showActive = 'is-active';
-                    this.$children[1].listShow = this.listPhone[key];
+                    this.$children[1].listShow = this.temp[key];
                 },
                 openUpdate(key){
                     this.updateActive = 'is-active';
-                    this.$children[2].list = this.listPhone[key];
+                    this.$children[2].list = this.temp[key];
                     this.$children[2].keychild = key;
                     // this.listPhone.splice(key,1);
                 },
@@ -102,8 +131,10 @@
                     if (confirm("Estas seguro de eliminar al contacto")) {
                         this.animate = !this.animate;
                         axios.delete(`/phonebook/${id}`)
-                        .then((response) => {this.listPhone.splice(key,1);
-                        this.animate = !this.animate;})
+                        .then((response) => {
+                        this.temp.splice(key,1);
+                        this.animate = !this.animate;
+                        this.refresh()})
                         .catch((error) => this.errors = error.response.data.errors);
                     }
                     
